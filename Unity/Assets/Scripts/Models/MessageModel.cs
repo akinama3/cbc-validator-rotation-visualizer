@@ -38,16 +38,3 @@ public class MessageModel
         this.SenderName = senderName;
     }
 }
-
-// YAML
-/*
- *       - estimate:
-          hash: 92689018377936
-          parent_hash: null
-        hash: 24381726710723
-        justification: []
-        parent_hash: null
-        receiver_slot: 0
-        sender: v1
-        sender_slot: 0
-*/

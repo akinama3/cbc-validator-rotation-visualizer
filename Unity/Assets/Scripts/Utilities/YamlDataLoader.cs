@@ -14,9 +14,12 @@ public static class YamlDataLoader
     /// YAMLファイルからデータをロードして、MessageModelリストを生成する
     /// </summary>
     /// <param name="path">読み込み元YAMLファイルパス</param>
-    /// <returns>List<MessageModel></returns>
-    public static Dictionary<int, Dictionary<string, ValidatorModel>> LoadAllMessageModelsFromYamlFile(string path)
+    /// <returns>List<SimulationModel></returns>
+    public static SimulationModel LoadAllMessageModelsFromYamlFile(string path)
     {
+        var simulationModel = new SimulationModel();
+        var allMessages = new Dictionary<string, MessageModel>();
+        
         var slots = new Dictionary<int, Dictionary<string, ValidatorModel>>();
         var sr = new StreamReader(path);
         var deserializer = new DeserializerBuilder().Build();
@@ -36,8 +39,6 @@ public static class YamlDataLoader
             foreach (IDictionary validator in validators)
             {
                 var validatorName = (string) validator["name"];
-                Debug.Log(validatorName);
-                Debug.Log(slotNo);
                 var state = (IDictionary) validator["state"];
                 
                 var messageModels = new List<MessageModel>();
@@ -64,8 +65,10 @@ public static class YamlDataLoader
                         var justificationSender = (string) m["sender"];
                         justificationMessages.Append(new MessageModel(justificationHash, justificationSender));
                     }
-                    messageModels.Append(new MessageModel(hash, sender, parentHash, receiverSlot, senderSlot,
-                        estimateModel, justificationMessages));
+                    var messageModel = new MessageModel(hash, sender, parentHash, receiverSlot, senderSlot,
+                        estimateModel, justificationMessages);
+                    messageModels.Append(messageModel);
+                    allMessages[messageModel.Hash] = messageModel;
                 }
                 var stateModel = new StateModel(messageModels);
                 var validatorModel = new ValidatorModel(validatorName, stateModel);
@@ -74,7 +77,10 @@ public static class YamlDataLoader
             slots[slotNo] = validatorMap;
         }
         Debug.Log("finish");
-        return slots;
+        
+        simulationModel.Slots = slots;
+        simulationModel.AllMessages = allMessages;
+        return simulationModel;
     }
 }
 

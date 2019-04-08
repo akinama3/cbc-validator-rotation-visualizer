@@ -3,6 +3,7 @@ using System.IO;
 using Models;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 public class VisualizerSceneController : MonoBehaviour
 {
@@ -19,12 +20,12 @@ public class VisualizerSceneController : MonoBehaviour
     /// <summary>
     /// EdgeModels (Dictionary key is slot no)
     /// </summary>
-    public Dictionary<int, Dictionary<string, List<EdgeModel>>> EdgeModels { get; private set; }
+    public Dictionary<int, Dictionary<string, List<EdgeModel>>> EdgeBySlot { get; private set; }
     
     /// <summary>
-    /// Slots (Dictionary key is slot no)
+    /// Simulation (Dictionary key is slot no)
     /// </summary>
-    public Dictionary<int, Dictionary<string, ValidatorModel>> Slots { get; set; }
+    public SimulationModel SimulationModel { get; private set; }
 
     /// <summary>
     /// YAMLファイルをロードするためのボタン
@@ -39,6 +40,7 @@ public class VisualizerSceneController : MonoBehaviour
 
     public void OnClickLoadButton()
     {
-        this.Slots = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
+        this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
+        this.EdgeBySlot = EdgeParser.initEdgeList(this.SimulationModel);
     }
 }

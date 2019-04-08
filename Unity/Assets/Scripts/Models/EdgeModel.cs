@@ -5,22 +5,22 @@ public class EdgeModel
     /// <summary>
     /// Message sender hash
     /// </summary>
-    public MessageModel Sender { get; private set; }
+    public MessageModel SrcMsg { get; private set; }
 
     /// <summary>
     /// Message receiver hash
     /// </summary>
-    public MessageModel Receiver { get; private set; }
+    public MessageModel DstMsg{ get; private set; }
 
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="sender">Message sender hash</param>
-    /// <param name="receiver">Message receiver hash</param>
-    public EdgeModel(MessageModel sender, MessageModel receiver)
+    /// <param name="srcMsg">Message sender hash</param>
+    /// <param name="dstMsg">Message receiver hash</param>
+    public EdgeModel(MessageModel srcMsg, MessageModel dstMsg)
     {
-        this.Sender = sender;
+        this.SrcMsg = srcMsg;
 
-        this.Receiver = receiver;
+        this.DstMsg = dstMsg;
     }
 }
