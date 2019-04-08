@@ -1,15 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.SymbolStore;
 using System.IO;
-using System.Linq;
-using Models;
-using UnityEngine.Analytics;
 using Debug = UnityEngine.Debug;
-using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.NodeDeserializers;
 
 
 public static class YamlDataLoader
@@ -29,13 +21,11 @@ public static class YamlDataLoader
             .JsonCompatible()
             .Build();
         
-        var json = serializer.Serialize(yamlObject);
+        var jsonStr = serializer.Serialize(yamlObject);
 
         Debug.Log("-----------------");
-        Debug.Log(json);
-        Debug.Log("-----------------");    
-        
-        
+        Debug.Log(jsonStr);
+        Debug.Log("-----------------");
 
         
         return default(List<MessageModel>);
