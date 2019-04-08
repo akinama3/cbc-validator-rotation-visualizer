@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class EdgeModel
@@ -17,7 +18,7 @@ public class EdgeModel
     /// </summary>
     /// <param name="srcMsg">Message sender hash</param>
     /// <param name="dstMsg">Message receiver hash</param>
-    public EdgeModel(MessageModel srcMsg, MessageModel dstMsg)
+    public EdgeModel(MessageModel srcMsg, [CanBeNull] MessageModel dstMsg)
     {
         this.SrcMsg = srcMsg;
 

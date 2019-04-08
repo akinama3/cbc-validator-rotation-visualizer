@@ -19,21 +19,23 @@ namespace Utilities
             {
                 var slotNo = slotKeyValue.Key;
                 var validatorMap = slotKeyValue.Value;
+                edgesBySlot[slotNo] = new Dictionary<string, List<EdgeModel>>();
                 foreach (var vKeyValue in validatorMap)
                 {
                     var validatorName = vKeyValue.Key;
                     var validatorModel = vKeyValue.Value;
-                    Debug.Log(validatorModel.State.Messages);
+                    edgesBySlot[slotNo][validatorName] = new List<EdgeModel>();
+                    
                     foreach (var m in validatorModel.State.Messages)
                     {
                         var srcMsg = simulation.AllMessages[m.Hash];
-                        var dstMsg = simulation.AllMessages[m.ParentHash];
-                        var edgeModel = new EdgeModel(srcMsg, dstMsg);
-                        Debug.Log("----------------");
-                        Debug.Log(validatorName);
+                        var dstMsg = m.ParentHash != null ? simulation.AllMessages[m.ParentHash] : null;
+                        
+                        Debug.Log("-----------");
                         Debug.Log(srcMsg.Hash);
-                        Debug.Log(dstMsg.Hash);
-                        Debug.Log("----------------");
+                        Debug.Log("-----------");
+                        var edgeModel = new EdgeModel(srcMsg, dstMsg);
+                        Debug.Log(edgeModel.SrcMsg.Hash);
                         edgesBySlot[slotNo][validatorName].Add(edgeModel);
                     } 
                 }
