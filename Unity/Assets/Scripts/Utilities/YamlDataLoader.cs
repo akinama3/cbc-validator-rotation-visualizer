@@ -18,6 +18,7 @@ public static class YamlDataLoader
         string text = sr.ReadToEnd();
         Debug.Log("-------------");
         Debug.Log(text);
+        Debug.Log(text.Length);
         Debug.Log("-------------");
         
         return default(List<MessageModel>);
