@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
+using YamlDotNet;
+
 
 public static class YamlDataLoader
 {
@@ -11,6 +14,11 @@ public static class YamlDataLoader
     public static List<MessageModel> LoadAllMessageModelsFromYamlFile(string path)
     {
         Debug.Log(path);
+        StreamReader sr = new StreamReader(path);
+        string text = sr.ReadToEnd();
+        Debug.Log("-------------");
+        Debug.Log(text);
+        Debug.Log("-------------");
         
         return default(List<MessageModel>);
     }

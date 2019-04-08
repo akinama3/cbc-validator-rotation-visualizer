@@ -8,7 +8,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// <summary>
     /// YAMLファイルのロード元パス
     /// </summary>
-    private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output.yaml");
+    private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output.yml");
     
     /// <summary>
     /// MessageModels (Dictionary key is slot no)
