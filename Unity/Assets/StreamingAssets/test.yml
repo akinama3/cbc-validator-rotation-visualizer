@@ -1,0 +1,52 @@
+slot: 1
+validators:
+  - current_slot: 1
+    name: v0
+    state:
+      messages:
+        - estimate:
+            hash: 92689018377936
+            parent_hash: null
+          hash: 24381726710723
+          justification: []
+          parent_hash: null
+          receiver_slot: 0
+          sender: v1
+          sender_slot: 0
+        - estimate:
+            hash: 4369441391216
+            parent_hash: 92689018377936
+          hash: 76958864578603
+          justification:
+            - message_hash: 24381726710723
+              sender: v1
+          parent_hash: 24381726710723
+          receiver_slot: 0
+          sender: v0
+          sender_slot: 0
+  - current_slot: 1
+    name: v1
+    state:
+      messages:
+        - estimate:
+            hash: 92689018377936
+            parent_hash: null
+          hash: 24381726710723
+          justification: []
+          parent_hash: null
+          receiver_slot: 0
+          sender: v1
+          sender_slot: 0
+  - current_slot: 1
+    name: v2
+    state:
+      messages:
+        - estimate:
+            hash: 92689018377936
+            parent_hash: null
+          hash: 24381726710723
+          justification: []
+          parent_hash: null
+          receiver_slot: 0
+          sender: v1
+          sender_slot: 0

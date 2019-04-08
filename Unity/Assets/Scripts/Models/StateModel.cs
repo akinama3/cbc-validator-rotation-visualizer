@@ -1,7 +1,8 @@
 using System.Collections.Generic;
     public class StateModel
     {
-        public List<MessageModel> messages { get; set; }
+        public List<MessageModel> Messages { get; set; }
+
     }
 
 
