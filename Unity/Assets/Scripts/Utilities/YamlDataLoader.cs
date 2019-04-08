@@ -63,11 +63,11 @@ public static class YamlDataLoader
                     {
                         var justificationHash = (string)m["message_hash"];
                         var justificationSender = (string) m["sender"];
-                        justificationMessages.Append(new MessageModel(justificationHash, justificationSender));
+                        justificationMessages.Add(new MessageModel(justificationHash, justificationSender));
                     }
                     var messageModel = new MessageModel(hash, sender, parentHash, receiverSlot, senderSlot,
                         estimateModel, justificationMessages);
-                    messageModels.Append(messageModel);
+                    messageModels.Add(messageModel);
                     allMessages[messageModel.Hash] = messageModel;
                 }
                 var stateModel = new StateModel(messageModels);

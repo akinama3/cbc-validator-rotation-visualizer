@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Models;
 using UnityEngine;
 
@@ -10,7 +11,10 @@ namespace Utilities
 
         public static Dictionary<int, Dictionary<string, List<EdgeModel>>> initEdgeList(SimulationModel simulation)
         {
+            Debug.Log("-------start to parse edges---");
             var edgesBySlot = new Dictionary<int, Dictionary<string, List<EdgeModel>>>();
+            Debug.Log(simulation.Slots.Count);
+            Debug.Log(simulation.AllMessages.Count);
             foreach (var slotKeyValue in simulation.Slots)
             {
                 var slotNo = slotKeyValue.Key;
@@ -19,16 +23,22 @@ namespace Utilities
                 {
                     var validatorName = vKeyValue.Key;
                     var validatorModel = vKeyValue.Value;
+                    Debug.Log(validatorModel.State.Messages);
                     foreach (var m in validatorModel.State.Messages)
                     {
                         var srcMsg = simulation.AllMessages[m.Hash];
                         var dstMsg = simulation.AllMessages[m.ParentHash];
                         var edgeModel = new EdgeModel(srcMsg, dstMsg);
-                        edgesBySlot[slotNo][validatorName].Append(edgeModel);
+                        Debug.Log("----------------");
+                        Debug.Log(validatorName);
+                        Debug.Log(srcMsg.Hash);
+                        Debug.Log(dstMsg.Hash);
+                        Debug.Log("----------------");
+                        edgesBySlot[slotNo][validatorName].Add(edgeModel);
                     } 
                 }
             }
-
+            
             return edgesBySlot;
         }
     }
