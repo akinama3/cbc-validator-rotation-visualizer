@@ -19,7 +19,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// <summary>
     /// EdgeModels (Dictionary key is slot no)
     /// </summary>
-    public Dictionary<int, List<MessageModel>> EdgeModels { get; private set; }
+    public Dictionary<int, Dictionary<string, List<EdgeModel>>> EdgeModels { get; private set; }
     
     /// <summary>
     /// Slots (Dictionary key is slot no)

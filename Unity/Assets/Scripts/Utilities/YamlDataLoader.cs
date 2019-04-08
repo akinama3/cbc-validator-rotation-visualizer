@@ -26,7 +26,6 @@ public static class YamlDataLoader
             .Build();
         
         var jsonStr = serializer.Serialize(yamlObject);
-        Debug.Log(jsonStr);
 
         var slotList = (IList)Json.Deserialize(jsonStr);
         foreach (IDictionary slot in slotList)
@@ -63,8 +62,6 @@ public static class YamlDataLoader
                     {
                         var justificationHash = (string)m["message_hash"];
                         var justificationSender = (string) m["sender"];
-                        Debug.Log(justificationHash);
-                        Debug.Log(justificationSender);
                         justificationMessages.Append(new MessageModel(justificationHash, justificationSender));
                     }
                     messageModels.Append(new MessageModel(hash, sender, parentHash, receiverSlot, senderSlot,
@@ -77,7 +74,6 @@ public static class YamlDataLoader
             slots[slotNo] = validatorMap;
         }
         Debug.Log("finish");
-        Debug.Log(slots);
         return slots;
     }
 }
