@@ -11,6 +11,7 @@
 
 # JetBrains
 /Unity/.idea
+/Unity/Assets/Plugins/Editor/JetBrains/
 
 # DS Store
 .DS_Store
