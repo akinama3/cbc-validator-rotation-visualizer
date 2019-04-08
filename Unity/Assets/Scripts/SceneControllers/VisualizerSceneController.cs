@@ -11,14 +11,14 @@ public class VisualizerSceneController : MonoBehaviour
     private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output.yaml");
     
     /// <summary>
-    /// MessageModels
+    /// MessageModels (Dictionary key is slot no)
     /// </summary>
-    public List<MessageModel> MessageModels { get; private set; }
+    public Dictionary<int, List<MessageModel>> MessageModels { get; private set; }
     
     /// <summary>
-    /// EdgeModels
+    /// EdgeModels (Dictionary key is slot no)
     /// </summary>
-    public List<MessageModel> EdgeModels { get; private set; }
+    public Dictionary<int, List<MessageModel>> EdgeModels { get; private set; }
 
     /// <summary>
     /// YAMLファイルをロードするためのボタン
