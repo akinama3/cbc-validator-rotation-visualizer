@@ -23,37 +23,21 @@ public static class YamlDataLoader
     {
         Debug.Log(path);
         StreamReader sr = new StreamReader(path);
-        var yaml = new YamlStream();
-        yaml.Load(sr);
+        var deserializer = new DeserializerBuilder().Build();
+        var yamlObject = deserializer.Deserialize(sr);
+        var serializer = new SerializerBuilder()
+            .JsonCompatible()
+            .Build();
+        
+        var json = serializer.Serialize(yamlObject);
 
-        var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention());
-        var items = (YamlSequenceNode) yaml.Documents[0].RootNode;
-        foreach (var item in items)
-        {
-            
-            Debug.Log("-----------");
-            Debug.Log(item["slot"].ToString());
-            Debug.Log("-xxxx");
-            foreach (YamlMappingNode validator in item["validators"])
-            {
-                
-            }
+        Debug.Log("-----------------");
+        Debug.Log(json);
+        Debug.Log("-----------------");    
+        
+        
 
-            Debug.Log(item["validators"]);
-            Debug.Log("-xxxx");
-            /*
-            foreach (var validatorItem in item["validators"].AllNodes)
-            {
-                Debug.Log("xxx");
-                Debug.Log("xxx");
-                
-            }
-            */
-            Debug.Log(item["validators"].ToString());
-            Debug.Log("-----------");
-
-        }
-
+        
         return default(List<MessageModel>);
     }
 }
