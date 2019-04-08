@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MessageModel : MonoBehaviour
+public class MessageModel
 {
     /// <summary>
     /// The Hash of this message 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EdgeModel : MonoBehaviour
+public class EdgeModel
 {
     /// <summary>
     /// Message sender hash
