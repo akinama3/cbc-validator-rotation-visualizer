@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,11 @@ public class VisualizerSceneController : MonoBehaviour
     /// EdgeModels (Dictionary key is slot no)
     /// </summary>
     public Dictionary<int, List<MessageModel>> EdgeModels { get; private set; }
+    
+    /// <summary>
+    /// Slots (Dictionary key is slot no)
+    /// </summary>
+    public Dictionary<int, Dictionary<string, ValidatorModel>> Slots { get; set; }
 
     /// <summary>
     /// YAMLファイルをロードするためのボタン
@@ -33,6 +39,6 @@ public class VisualizerSceneController : MonoBehaviour
 
     public void OnClickLoadButton()
     {
-        YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
+        this.Slots = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
     }
 }
