@@ -6,6 +6,7 @@ using Debug = UnityEngine.Debug;
 using YamlDotNet.Serialization;
 using MiniJSON;
 using Models;
+using UnityEngine.Networking.PlayerConnection;
 
 
 public static class YamlDataLoader
@@ -19,6 +20,7 @@ public static class YamlDataLoader
     {
         var simulationModel = new SimulationModel();
         var allMessages = new Dictionary<string, MessageModel>();
+        var messageHashBySender = new Dictionary<string, Dictionary<string, bool>>();
         
         var slots = new Dictionary<int, Dictionary<string, ValidatorModel>>();
         var sr = new StreamReader(path);
@@ -43,6 +45,7 @@ public static class YamlDataLoader
                 
                 var messageModels = new List<MessageModel>();
                 var messages = (IList) state["messages"];
+
                 foreach (IDictionary message in messages)
                 {
                     var hash = (string)message["hash"];
@@ -51,7 +54,12 @@ public static class YamlDataLoader
                     var sender = (string)message["sender"];
                     var senderSlot = int.Parse((string) message["sender_slot"]);
                     var estimate = (IDictionary) message["estimate"];
-                    
+
+                    if (!messageHashBySender.ContainsKey(sender))
+                    {
+                        messageHashBySender[sender] = new Dictionary<string, bool>();
+                    }
+                    messageHashBySender[sender][hash] = true;
                     
                     var estimatedHash = (string) estimate["hash"];
                     var estimatedParentHash = (string) estimate["parent_hash"];
@@ -80,6 +88,8 @@ public static class YamlDataLoader
         
         simulationModel.Slots = slots;
         simulationModel.AllMessages = allMessages;
+        simulationModel.MessageHashBySender = messageHashBySender;
+        
         return simulationModel;
     }
 }
