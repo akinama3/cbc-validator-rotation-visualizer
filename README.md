@@ -16,4 +16,9 @@ Unity 2018.3.11
 7. Wait loading YAML Data
 
 ## Visualization Image
+
+### Messages visualization on specified slot 
 ![simulation](https://i.gyazo.com/c3fb51c3d5bfc49bd72585d7e0f72973.gif)
+
+### Validator Rotation visualization
+![rotation](https://i.gyazo.com/6dd41322ecccd65b99f3216a1802b244.gif)
