@@ -57,7 +57,7 @@ public class MessagePrefabController : MonoBehaviour
     private void Initialize(MessageModel messageModel)
     {
         this.MessageModel = messageModel;
-        this.messageHashText.SetText(messageModel.Hash);
+        this.messageHashText.SetText(messageModel.SenderName);
     }
     
 }
