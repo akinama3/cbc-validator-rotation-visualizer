@@ -47,6 +47,11 @@ public class ValidatorViewPrefabController : MonoBehaviour
     [SerializeField] private List<MessagePrefabController> messagePrefabControllers;
     
     /// <summary>
+    /// Edge Prefab Controllers
+    /// </summary>
+    [SerializeField] private List<EdgePrefabController> edgePrefabControllers;
+    
+    /// <summary>
     /// Validator Name
     /// </summary>
     [SerializeField] private TextMeshProUGUI validatorName;
@@ -78,13 +83,13 @@ public class ValidatorViewPrefabController : MonoBehaviour
         
         EdgeBySlot = edgeBySlot;
 
-        UpdateBySlot(slot);
+        UpdateBySlot(slot).Forget();
     }
 
     /// <summary>
     /// 特定スロットの状態にViewをアップデートする
     /// </summary>
-    public void UpdateBySlot(int slot)
+    public async UniTaskVoid UpdateBySlot(int slot)
     {
         foreach (var verticalLayoutGroup in verticalLayoutGroups)
         {
@@ -93,13 +98,20 @@ public class ValidatorViewPrefabController : MonoBehaviour
         
         verticalLayoutGroups.Clear();
        
+        foreach (var edgePrefabController in edgePrefabControllers)
+        {
+            Destroy(edgePrefabController.gameObject);
+        }
+        
+        edgePrefabControllers.Clear();
+ 
         foreach (var messagePrefabController in messagePrefabControllers)
         {
             Destroy(messagePrefabController.gameObject);
         }
         
         messagePrefabControllers.Clear();
-        
+       
         foreach (var messageModel in MessageModels[slot])
         {
             var verticalLayoutGroupGameObject = Instantiate(Resources.Load<GameObject>(VerticalLayoutPrefabPath));
@@ -117,16 +129,23 @@ public class ValidatorViewPrefabController : MonoBehaviour
 
         foreach (var edgeModel in EdgeBySlot[slot])
         {
-            foreach (var messagePrefabController in messagePrefabControllers.Where(prefabController => prefabController.MessageModel == edgeModel.SrcMsg))
+            foreach (var messagePrefabController in messagePrefabControllers.Where(prefabController => prefabController.MessageModel.Hash == edgeModel.SrcMsg.Hash))
             {
-                var destinationMessagePrefabController = messagePrefabControllers.FirstOrDefault(prefabController => prefabController.MessageModel == edgeModel.DstMsg);
+                if (edgeModel.DstMsg == null)
+                {
+                    continue;
+                }
+                
+                var destinationMessagePrefabController = messagePrefabControllers.FirstOrDefault(prefabController => prefabController.MessageModel.Hash == edgeModel.DstMsg.Hash);
 
                 if (destinationMessagePrefabController == null)
                 {
                     continue;
                 }
 
-                EdgePrefabController.InstantiatePrefabAsync(messagePrefabController, destinationMessagePrefabController).Forget();
+                var edgePrefabController = await EdgePrefabController.InstantiatePrefabAsync(messagePrefabController, destinationMessagePrefabController);
+                
+                edgePrefabControllers.Add(edgePrefabController);
             }
         }
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9092061781081800990}
   - component: {fileID: 9092061781081800989}
   m_Layer: 5
-  m_Name: Edge
+  m_Name: EdgeView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9092061781081800976}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

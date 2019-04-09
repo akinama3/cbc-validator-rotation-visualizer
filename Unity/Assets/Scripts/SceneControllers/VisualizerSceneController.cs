@@ -46,10 +46,8 @@ public class VisualizerSceneController : MonoBehaviour
 
         SimulationModel.SetAttrsByValidator();
 
-        slotSlider.minValue = SimulationModel.Slots.First()
-            .Key;
-        slotSlider.maxValue = SimulationModel.Slots.Last()
-            .Key;
+        slotSlider.minValue = SimulationModel.Slots.First().Key;
+        slotSlider.maxValue = SimulationModel.Slots.Last().Key;
         slotSlider.wholeNumbers = true;
 
         foreach (var validatorName in SimulationModel.AllValidatorNames)
@@ -70,7 +68,7 @@ public class VisualizerSceneController : MonoBehaviour
     {
         foreach (var validatorViewPrefabController in validatorViewPrefabControllers)
         {
-            validatorViewPrefabController.UpdateBySlot((int)slotSlider.value);
+            validatorViewPrefabController.UpdateBySlot((int)slotSlider.value).Forget();
         }
     }
 
