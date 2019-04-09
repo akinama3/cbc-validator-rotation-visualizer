@@ -161,6 +161,8 @@ public class ValidatorViewPrefabController : MonoBehaviour
             messagePrefabController.transform.SetParent(verticalLayoutGroupGameObject.transform, false);
         }
 
+        messagePrefabControllers = messagePrefabControllers.Where(prefabController => prefabController.MessageModel != null).ToList();
+        
         foreach (var edgeModel in EdgeBySlot[slot])
         {
             foreach (var messagePrefabController in messagePrefabControllers.Where(prefabController => prefabController.MessageModel.Hash == edgeModel.SrcMsg.Hash))
