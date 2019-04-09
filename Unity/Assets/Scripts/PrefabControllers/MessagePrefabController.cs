@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MessagePrefabController : MonoBehaviour
 {
@@ -26,13 +27,16 @@ public class MessagePrefabController : MonoBehaviour
     /// <summary>
     /// 初期化処理を実行する
     /// </summary>
-    public static MessagePrefabController InstantiatePrefab(MessageModel messageModel)
+    public static MessagePrefabController InstantiatePrefab(MessageModel messageModel, float maxCliqueSize)
     {
         var gameObject = Instantiate(Resources.Load<GameObject>(PrefabPath));
-
+        var color = gameObject.GetComponent<Image>().color;
         var messagePrefabController = gameObject.GetComponent<MessagePrefabController>();
         
         messagePrefabController.Initialize(messageModel);
+        var messageCliqueSize = messageModel.CliqueSize;
+        var opacity = 0.1f + (0.9f / maxCliqueSize) * messageCliqueSize;
+        gameObject.GetComponent<Image>().color = new Color(color.r, color.g, color.b, opacity);
 
         return messagePrefabController;
     }
@@ -55,7 +59,7 @@ public class MessagePrefabController : MonoBehaviour
     private void Initialize(MessageModel messageModel)
     {
         this.MessageModel = messageModel;
-        
         this.messageHashText.SetText(messageModel.Hash);
     }
+    
 }

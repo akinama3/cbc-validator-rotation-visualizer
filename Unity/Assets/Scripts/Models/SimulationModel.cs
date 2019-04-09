@@ -14,6 +14,7 @@ public class SimulationModel
     public Dictionary<string, Dictionary<int, List<MessageModel>>> MessageByValidator;
     public Dictionary<string, bool> AllValidatorNames;
     public Dictionary<int, List<string>> ValidatorNamesBySlot;
+    public float MaxCliqueSize;
 
     public void SetAttrsByValidator()
     {

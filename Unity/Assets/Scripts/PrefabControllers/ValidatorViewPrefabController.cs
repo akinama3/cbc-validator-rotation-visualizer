@@ -66,17 +66,23 @@ public class ValidatorViewPrefabController : MonoBehaviour
     /// Message fork count
     /// </summary>
     private int maxForkCount;
+
+    /// <summary>
+    /// Message max clique size
+    /// </summary>
+    private float maxCliqueSize;
     
     /// <summary>
     /// Validator ViewのInstantiate
     /// </summary>
-    public static ValidatorViewPrefabController InstantiatePrefab(string validatorName, int slot, Dictionary<int, List<MessageModel>> messageModels, Dictionary<int, List<EdgeModel>> edgeBySlot)
+    public static ValidatorViewPrefabController InstantiatePrefab(string validatorName, int slot, Dictionary<int, List<MessageModel>> messageModels, Dictionary<int, List<EdgeModel>> edgeBySlot, float maxCliqueSize)
     {
         var gameObject = Instantiate(Resources.Load<GameObject>(PrefabPath));
 
         var validatorViewPrefabController = gameObject.GetComponent<ValidatorViewPrefabController>();
 
         validatorViewPrefabController.Initialize(validatorName, slot, messageModels, edgeBySlot);
+        validatorViewPrefabController.maxCliqueSize = maxCliqueSize;
 
         return validatorViewPrefabController;
     }
@@ -166,7 +172,7 @@ public class ValidatorViewPrefabController : MonoBehaviour
                 messagePrefabControllers.Add(messagePrefabControllerBlank);
             }
 
-            var messagePrefabController = MessagePrefabController.InstantiatePrefab(messageModel);
+            var messagePrefabController = MessagePrefabController.InstantiatePrefab(messageModel, this.maxCliqueSize);
             
             messagePrefabControllers.Add(messagePrefabController);
             
