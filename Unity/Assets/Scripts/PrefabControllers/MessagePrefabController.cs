@@ -34,9 +34,7 @@ public class MessagePrefabController : MonoBehaviour
         var messagePrefabController = gameObject.GetComponent<MessagePrefabController>();
         
         messagePrefabController.Initialize(messageModel);
-        var messageCliqueSize = messageModel.CliqueSize;
-        var opacity = 0.1f + (0.9f / maxCliqueSize) * messageCliqueSize;
-        gameObject.GetComponent<Image>().color = new Color(color.r, color.g, color.b, opacity);
+        gameObject.GetComponent<Image>().color = messageModel.GetColor(maxCliqueSize);
 
         return messagePrefabController;
     }
