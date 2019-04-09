@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class MessagePrefabController : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class MessagePrefabController : MonoBehaviour
     /// MessageModel
     /// </summary>
     public MessageModel MessageModel { get; private set; }
+
+    /// <summary>
+    /// Message Hash Text
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI messageHashText;
 
     /// <summary>
     /// 初期化処理を実行する
@@ -49,5 +55,7 @@ public class MessagePrefabController : MonoBehaviour
     private void Initialize(MessageModel messageModel)
     {
         this.MessageModel = messageModel;
+        
+        this.messageHashText.SetText(messageModel.Hash);
     }
 }
