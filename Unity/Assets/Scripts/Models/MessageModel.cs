@@ -15,6 +15,9 @@ public class MessageModel
     public string ParentHash { get; set; }
     public int ReceiverSlot { get; set; }
     public int SenderSlot { get; set; }
+    
+    // the size of Clique
+    public float CliqueSize { get; set; }
     public List<MessageModel> Justification { get; set; }
     
     /// <summary>
