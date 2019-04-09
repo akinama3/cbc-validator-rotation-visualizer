@@ -48,9 +48,6 @@ public class SimulationModel
                     var srcMsg = this.AllMessages[m.Hash];
                     var dstMsg = m.ParentHash != null ? this.AllMessages[m.ParentHash] : null;
                         
-                    Debug.Log("-----------");
-                    Debug.Log(srcMsg.Hash);
-                    Debug.Log("-----------");
                     var edgeModel = new EdgeModel(srcMsg, dstMsg);
                     Debug.Log(edgeModel.SrcMsg.Hash);
                     edgeByValidator[validatorName][slotNo].Add(edgeModel);
@@ -67,34 +64,16 @@ public class SimulationModel
     public void DebugPrint()
     {
         Debug.Log("-----xxxxxxxxxxxxxxxx-----------");
-        foreach (var keyValuePair in this.EdgeByValidator)
+        foreach (var keyValuePair in this.AllMessages)
         {
-            var key = keyValuePair.Key;
-            var value = keyValuePair.Value;
-            Debug.Log(key);
-            Debug.Log(value);
-            foreach (var valuePair in value)
-            {
-                var k = valuePair.Key;
-                var v = valuePair.Value;
-                Debug.Log(k);
-                Debug.Log(v);
-            }
-        }
-
-        foreach (var keyValuePair in this.MessageByValidator)
-        {
-            var key = keyValuePair.Key;
-            var value = keyValuePair.Value;
-            Debug.Log(key);
-            Debug.Log(value);
-            foreach (var valuePair in value)
-            {
-                var k = valuePair.Key;
-                var v = valuePair.Value;
-                Debug.Log(k);
-                Debug.Log(v);
-            }
+            var messageHash = keyValuePair.Key;
+            var message = keyValuePair.Value;
+            Debug.Log("----message---");
+            Debug.Log(messageHash);
+            Debug.Log(message.CliqueSize);
+            Debug.Log(message.Estimate.Height);
+            Debug.Log(message.Estimate.ActiveValidators.Count);
+            Debug.Log("----message---");
         }
         Debug.Log("-----xxxxxxxxxxxxxxxx-----------");
     }

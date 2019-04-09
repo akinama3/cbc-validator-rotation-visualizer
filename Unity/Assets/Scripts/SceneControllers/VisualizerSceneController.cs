@@ -10,7 +10,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// <summary>
     /// YAMLファイルのロード元パス
     /// </summary>
-    private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output.yml");
+    private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output2.yml");
 
     /// <summary>
     /// Simulation (Dictionary key is slot no)
@@ -45,6 +45,7 @@ public class VisualizerSceneController : MonoBehaviour
         SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
 
         SimulationModel.SetAttrsByValidator();
+        // SimulationModel.DebugPrint();
 
         slotSlider.minValue = SimulationModel.Slots.First().Key;
         slotSlider.maxValue = SimulationModel.Slots.Last().Key;

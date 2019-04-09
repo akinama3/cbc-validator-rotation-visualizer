@@ -8,7 +8,7 @@ namespace Models
         public string Hash { set; get; }
         public string ParentHash { set; get; }
         
-        public List<string> ActiveValidators { getl; set; }
+        public List<string> ActiveValidators { get; set; }
 
         public int Height { get; set; }
 

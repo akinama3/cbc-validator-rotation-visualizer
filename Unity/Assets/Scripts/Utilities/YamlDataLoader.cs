@@ -69,8 +69,12 @@ public static class YamlDataLoader
                     
                     var estimatedHash = (string) estimate["hash"];
                     var estimatedParentHash = (string) estimate["parent_hash"];
-                    var height = (int) estimate["height"];
-                    var activeValidators = (List<string>) estimate["active_validators"];
+                    var height = int.Parse((string)estimate["height"]);
+                    var activeValidators = new List<string>();
+                    foreach (string activeValidatorName in (IList)estimate["active_validators"])
+                    {
+                        activeValidators.Add(activeValidatorName);   
+                    }
                     var estimateModel = new EstimateModel(estimatedHash, estimatedParentHash, height, activeValidators);
 
                     var justificationMessages = new List<MessageModel>();
@@ -84,7 +88,7 @@ public static class YamlDataLoader
                     var messageModel = new MessageModel(hash, sender, parentHash, receiverSlot, senderSlot,
                         estimateModel, justificationMessages);
                     
-                    messageModel.CliqueSize = (float)message["clique_size"];
+                    messageModel.CliqueSize = float.Parse((string)message["clique_size"]);
                     messageModels.Add(messageModel);
                     allMessages[messageModel.Hash] = messageModel;
                 }
