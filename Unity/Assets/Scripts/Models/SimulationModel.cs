@@ -11,6 +11,7 @@ public class SimulationModel
 
     public Dictionary<string, Dictionary<int, List<EdgeModel>>> EdgeByValidator;
     public Dictionary<string, Dictionary<int, List<MessageModel>>> MessageByValidator;
+    public Dictionary<string, bool> AllValidatorNames;
 
     public void SetAttrsByValidator()
     {

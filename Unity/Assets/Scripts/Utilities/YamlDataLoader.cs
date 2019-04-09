@@ -20,6 +20,7 @@ public static class YamlDataLoader
     {
         var simulationModel = new SimulationModel();
         var allMessages = new Dictionary<string, MessageModel>();
+        var allValidatorNames = new Dictionary<string, bool>();
         var messageHashBySender = new Dictionary<string, Dictionary<string, bool>>();
         
         var slots = new Dictionary<int, Dictionary<string, ValidatorModel>>();
@@ -42,6 +43,7 @@ public static class YamlDataLoader
             {
                 var validatorName = (string) validator["name"];
                 var state = (IDictionary) validator["state"];
+                allValidatorNames[validatorName] = true;
                 
                 var messageModels = new List<MessageModel>();
                 var messages = (IList) state["messages"];
@@ -89,7 +91,8 @@ public static class YamlDataLoader
         simulationModel.Slots = slots;
         simulationModel.AllMessages = allMessages;
         simulationModel.MessageHashBySender = messageHashBySender;
-        
+
+        simulationModel.AllValidatorNames = allValidatorNames;
         return simulationModel;
     }
 }
