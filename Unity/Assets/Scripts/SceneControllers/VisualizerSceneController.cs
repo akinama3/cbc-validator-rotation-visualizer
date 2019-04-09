@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,18 +28,50 @@ public class VisualizerSceneController : MonoBehaviour
     /// ValidatorViewを配置するルートTransform
     /// </summary>
     [SerializeField] private Transform validatorViewsTransform;
+    
+    /// <summary>
+    /// Slot Slider
+    /// </summary>
+    [SerializeField] private Slider slotSlider;
+
+    /// <summary>
+    /// Validator View Prefab Controllers
+    /// </summary>
+    [SerializeField] private List<ValidatorViewPrefabController> validatorViewPrefabControllers;
 
     /// <summary>
     /// Click Event Function
     /// </summary>
     public void OnClickLoadButton()
     {
-        this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
+        SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
         
-        this.SimulationModel.SetAttrsByValidator();
+        SimulationModel.SetAttrsByValidator();
 
-        var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(MessageModels, EdgeBySlot);
+        slotSlider.minValue = SimulationModel.Slots.First().Key;
+        slotSlider.maxValue = SimulationModel.Slots.Last().Key;
+        slotSlider.wholeNumbers = true;
 
-        validatorViewPrefabController.transform.SetParent(validatorViewsTransform, false);
+        foreach (var validatorName in SimulationModel.AllValidatorNames)
+        {
+            var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(validatorName.Key, SimulationModel.Slots.First().Key,
+                SimulationModel.MessageByValidator[validatorName.Key], SimulationModel.EdgeByValidator[validatorName.Key]);
+            
+            validatorViewPrefabControllers.Add(validatorViewPrefabController);
+            
+            validatorViewPrefabController.transform.SetParent(validatorViewsTransform, false);
+        }
+    }
+
+    /// <summary>
+    /// Slot Slider Event
+    /// </summary>
+    public void OnChangedSlotSlider()
+    {
+        foreach (var validatorViewPrefabController in validatorViewPrefabControllers)
+        {
+            validatorViewPrefabController.UpdateBySlot((int)slotSlider.value);
+        }
+        
     }
 }
