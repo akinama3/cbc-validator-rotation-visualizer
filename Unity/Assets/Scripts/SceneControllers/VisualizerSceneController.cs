@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Path = System.IO.Path;
@@ -32,6 +33,11 @@ public class VisualizerSceneController : MonoBehaviour
     /// </summary>
     [SerializeField] private Slider slotSlider;
 
+    /// <summary>
+    /// Slot Num Text
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI slotNumText;
+    
     /// <summary>
     /// Validator View Prefab Controllers
     /// </summary>
@@ -69,6 +75,8 @@ public class VisualizerSceneController : MonoBehaviour
     {
         foreach (var validatorViewPrefabController in validatorViewPrefabControllers)
         {
+            slotNumText.SetText(slotSlider.value.ToString());
+            
             validatorViewPrefabController.UpdateBySlot((int)slotSlider.value).Forget();
         }
     }
