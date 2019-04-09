@@ -1,4 +1,4 @@
-# CBC Validator Rotation Visualizer Project
+# CBC Casper Validator Rotation Visualizer Project
 
 ### System requirements
 
