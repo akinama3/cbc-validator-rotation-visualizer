@@ -21,11 +21,13 @@ public class VisualizerSceneController : MonoBehaviour
     /// EdgeModels (Dictionary key is slot no)
     /// </summary>
     public Dictionary<int, Dictionary<string, List<EdgeModel>>> EdgeBySlot { get; private set; }
+    public Dictionary<string, Dictionary<int, List<EdgeModel>>> EdgeByValidator { get; private set; }
     
     /// <summary>
     /// Simulation (Dictionary key is slot no)
     /// </summary>
     public SimulationModel SimulationModel { get; private set; }
+    
 
     /// <summary>
     /// YAMLファイルをロードするためのボタン
@@ -41,6 +43,6 @@ public class VisualizerSceneController : MonoBehaviour
     public void OnClickLoadButton()
     {
         this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
-        this.EdgeBySlot = EdgeParser.initEdgeList(this.SimulationModel);
+        this.SimulationModel.SetAttrsByValidator();
     }
 }
