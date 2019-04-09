@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using Models;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
+using Path = System.IO.Path;
+using Models;
 
 public class VisualizerSceneController : MonoBehaviour
 {
@@ -31,16 +32,23 @@ public class VisualizerSceneController : MonoBehaviour
     /// YAMLファイルをロードするためのボタン
     /// </summary>
     [SerializeField] private Button loadButton;
+    
+    /// <summary>
+    /// ValidatorViewを配置するルートTransform
+    /// </summary>
+    [SerializeField] private Transform validatorViewsTransform;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        Debug.Log("Start");
-    }
-
+    /// <summary>
+    /// Click Event Function
+    /// </summary>
     public void OnClickLoadButton()
     {
         this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
+        
         this.EdgeBySlot = EdgeParser.initEdgeList(this.SimulationModel);
+
+        var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(MessageModels, EdgeBySlot);
+        
+        validatorViewPrefabController.transform.SetParent(validatorViewsTransform, false);
     }
 }
