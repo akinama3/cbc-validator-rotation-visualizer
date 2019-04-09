@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UniRx.Async;
+using UniRx.Triggers;
 using Unity.VectorGraphics;
 using UnityEngine;
 
@@ -21,21 +22,6 @@ public class EdgePrefabController : MonoBehaviour
     public MessagePrefabController DestinationMessagePrefabController { get; private set; }
 
     /// <summary>
-    /// VectorGraphics描画のためのSceneオブジェクト
-    /// </summary>
-    public Scene Scene;
-
-    /// <summary>
-    /// BezierPathSegments
-    /// </summary>
-    public BezierPathSegment[] BezierPathSegments;
-
-    /// <summary>
-    /// BezierPathSegments
-    /// </summary>
-    public Path VectorGraphicsPath;
-
-    /// <summary>
     /// 初期化処理を実行する
     /// </summary>
     public static async UniTask<EdgePrefabController> InstantiatePrefabAsync(MessagePrefabController sourceMessagePrefabController, MessagePrefabController destinationMessagePrefabController)
@@ -54,7 +40,7 @@ public class EdgePrefabController : MonoBehaviour
     /// </summary>
     public async UniTaskVoid InitializeAysnc(MessagePrefabController sourceMessagePrefabController, MessagePrefabController destinationMessagePrefabController)
     {
-        await UniTask.DelayFrame(20);
+        await UniTask.DelayFrame(1);
         
         SourceMessagePrefabController = sourceMessagePrefabController;
 
@@ -78,5 +64,7 @@ public class EdgePrefabController : MonoBehaviour
         lineRenderer.endWidth = 0.03f;
         
         transform.SetParent(SourceMessagePrefabController.transform, false);
+
+        lineRenderer.enabled = true;
     }
 }
