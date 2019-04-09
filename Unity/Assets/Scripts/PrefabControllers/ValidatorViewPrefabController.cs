@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UniRx.Async;
@@ -60,6 +61,11 @@ public class ValidatorViewPrefabController : MonoBehaviour
     /// Message fork count
     /// </summary>
     private Dictionary<string, int> messageForkCounts = new Dictionary<string, int>();
+    
+    /// <summary>
+    /// Message fork count
+    /// </summary>
+    private int maxForkCount;
     
     /// <summary>
     /// Validator ViewのInstantiate
@@ -142,6 +148,12 @@ public class ValidatorViewPrefabController : MonoBehaviour
                     messageForkCounts[messageModel.Hash] = messageForkCounts[messageModel.ParentHash];
 
                     messageForkCounts[messageModel.ParentHash]++;
+
+                    maxForkCount = Math.Max(maxForkCount, messageForkCounts[messageModel.ParentHash]);
+
+                    var rectTransform = GetComponent<RectTransform>();
+                    
+                    rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 150 * maxForkCount);
                 }
             }
 
