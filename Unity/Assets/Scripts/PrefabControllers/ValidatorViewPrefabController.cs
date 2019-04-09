@@ -57,6 +57,11 @@ public class ValidatorViewPrefabController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI validatorName;
     
     /// <summary>
+    /// Message fork count
+    /// </summary>
+    private Dictionary<string, int> messageForkCounts = new Dictionary<string, int>();
+    
+    /// <summary>
     /// Validator ViewのInstantiate
     /// </summary>
     public static ValidatorViewPrefabController InstantiatePrefab(string validatorName, int slot, Dictionary<int, List<MessageModel>> messageModels, Dictionary<int, List<EdgeModel>> edgeBySlot)
@@ -91,6 +96,8 @@ public class ValidatorViewPrefabController : MonoBehaviour
     /// </summary>
     public async UniTaskVoid UpdateBySlot(int slot)
     {
+        messageForkCounts.Clear();
+        
         foreach (var verticalLayoutGroup in verticalLayoutGroups)
         {
             Destroy(verticalLayoutGroup);
@@ -119,6 +126,33 @@ public class ValidatorViewPrefabController : MonoBehaviour
             verticalLayoutGroupGameObject.transform.SetParent(horizontalLayoutGroupTransform, false);
             
             verticalLayoutGroups.Add(verticalLayoutGroupGameObject);
+
+            if (messageForkCounts.ContainsKey(messageModel.Hash))
+            {
+                messageForkCounts[messageModel.Hash]++;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(messageModel.ParentHash))
+                {
+                    messageForkCounts[messageModel.Hash] = 0;
+                }
+                else
+                {
+                    messageForkCounts[messageModel.Hash] = messageForkCounts[messageModel.ParentHash];
+
+                    messageForkCounts[messageModel.ParentHash]++;
+                }
+            }
+
+            for (int index = 0; index < messageForkCounts[messageModel.Hash]; index++)
+            {
+                var messagePrefabControllerBlank = MessagePrefabController.InstantiatePrefabBlank();
+                
+                messagePrefabControllerBlank.transform.SetParent(verticalLayoutGroupGameObject.transform, false);
+                
+                messagePrefabControllers.Add(messagePrefabControllerBlank);
+            }
 
             var messagePrefabController = MessagePrefabController.InstantiatePrefab(messageModel);
             
