@@ -23,6 +23,7 @@ public static class YamlDataLoader
         var allValidatorNames = new Dictionary<string, bool>();
         var messageHashBySender = new Dictionary<string, Dictionary<string, bool>>();
         var validatorNamesBySlot = new Dictionary<int, List<string>>();
+        var maxCliqueSize = 0.0f;
         
         var slots = new Dictionary<int, Dictionary<string, ValidatorModel>>();
         var sr = new StreamReader(path);
@@ -89,6 +90,10 @@ public static class YamlDataLoader
                         estimateModel, justificationMessages);
                     
                     messageModel.CliqueSize = float.Parse((string)message["clique_size"]);
+                    if (messageModel.CliqueSize > maxCliqueSize)
+                    {
+                        maxCliqueSize = messageModel.CliqueSize;
+                    }
                     messageModels.Add(messageModel);
                     allMessages[messageModel.Hash] = messageModel;
                 }
@@ -105,6 +110,7 @@ public static class YamlDataLoader
         simulationModel.MessageHashBySender = messageHashBySender;
         simulationModel.AllValidatorNames = allValidatorNames;
         simulationModel.ValidatorNamesBySlot = validatorNamesBySlot;
+        simulationModel.MaxCliqueSize = maxCliqueSize;
         
         return simulationModel;
     }

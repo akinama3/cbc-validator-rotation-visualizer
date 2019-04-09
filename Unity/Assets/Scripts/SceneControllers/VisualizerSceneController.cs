@@ -60,7 +60,7 @@ public class VisualizerSceneController : MonoBehaviour
         foreach (var validatorName in SimulationModel.AllValidatorNames)
         {
             var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(validatorName.Key, SimulationModel.Slots.First()
-                .Key, SimulationModel.MessageByValidator[validatorName.Key], SimulationModel.EdgeByValidator[validatorName.Key]);
+                .Key, SimulationModel.MessageByValidator[validatorName.Key], SimulationModel.EdgeByValidator[validatorName.Key], SimulationModel.MaxCliqueSize);
 
             validatorViewPrefabControllers.Add(validatorViewPrefabController);
 
