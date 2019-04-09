@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Models;
 using UnityEngine;
@@ -42,7 +43,19 @@ public class VisualizerSceneController : MonoBehaviour
 
     public void OnClickLoadButton()
     {
+        /*
+        Debug.Log("-----xxx-------xxx");
+        StartCoroutine(FetchDataViaHTTP());
+        Debug.Log("-----xxytx--------llll");
+        */
         this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
         this.SimulationModel.SetAttrsByValidator();
+    }
+
+    private static IEnumerator FetchDataViaHTTP()
+    {
+        Debug.Log("-----xxx");
+        yield return HttpDataLoader.LoadSimulationViaHTTP();
+        Debug.Log("-----xxytx");   
     }
 }
