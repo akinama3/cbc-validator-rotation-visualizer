@@ -12,17 +12,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// YAMLファイルのロード元パス
     /// </summary>
     private static readonly string YamlLoadPath = Path.Combine(Application.streamingAssetsPath, "output.yml");
-    
-    /// <summary>
-    /// MessageModels (Dictionary key is slot no)
-    /// </summary>
-    public Dictionary<int, List<MessageModel>> MessageModels { get; private set; }
-    
-    /// <summary>
-    /// EdgeModels (Dictionary key is slot no)
-    /// </summary>
-    public Dictionary<int, Dictionary<string, List<EdgeModel>>> EdgeBySlot { get; private set; }
-    
+
     /// <summary>
     /// Simulation (Dictionary key is slot no)
     /// </summary>
@@ -32,7 +22,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// YAMLファイルをロードするためのボタン
     /// </summary>
     [SerializeField] private Button loadButton;
-    
+
     /// <summary>
     /// ValidatorViewを配置するルートTransform
     /// </summary>
@@ -45,10 +35,10 @@ public class VisualizerSceneController : MonoBehaviour
     {
         this.SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
         
-        this.EdgeBySlot = EdgeParser.initEdgeList(this.SimulationModel);
+        this.SimulationModel.SetAttrsByValidator();
 
         var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(MessageModels, EdgeBySlot);
-        
+
         validatorViewPrefabController.transform.SetParent(validatorViewsTransform, false);
     }
 }
