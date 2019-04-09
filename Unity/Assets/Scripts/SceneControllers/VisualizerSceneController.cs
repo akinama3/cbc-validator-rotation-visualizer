@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities;
 using Path = System.IO.Path;
-using Models;
 
 public class VisualizerSceneController : MonoBehaviour
 {
@@ -28,7 +26,7 @@ public class VisualizerSceneController : MonoBehaviour
     /// ValidatorViewを配置するルートTransform
     /// </summary>
     [SerializeField] private Transform validatorViewsTransform;
-    
+
     /// <summary>
     /// Slot Slider
     /// </summary>
@@ -45,20 +43,22 @@ public class VisualizerSceneController : MonoBehaviour
     public void OnClickLoadButton()
     {
         SimulationModel = YamlDataLoader.LoadAllMessageModelsFromYamlFile(YamlLoadPath);
-        
+
         SimulationModel.SetAttrsByValidator();
 
-        slotSlider.minValue = SimulationModel.Slots.First().Key;
-        slotSlider.maxValue = SimulationModel.Slots.Last().Key;
+        slotSlider.minValue = SimulationModel.Slots.First()
+            .Key;
+        slotSlider.maxValue = SimulationModel.Slots.Last()
+            .Key;
         slotSlider.wholeNumbers = true;
 
         foreach (var validatorName in SimulationModel.AllValidatorNames)
         {
-            var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(validatorName.Key, SimulationModel.Slots.First().Key,
-                SimulationModel.MessageByValidator[validatorName.Key], SimulationModel.EdgeByValidator[validatorName.Key]);
-            
+            var validatorViewPrefabController = ValidatorViewPrefabController.InstantiatePrefab(validatorName.Key, SimulationModel.Slots.First()
+                .Key, SimulationModel.MessageByValidator[validatorName.Key], SimulationModel.EdgeByValidator[validatorName.Key]);
+
             validatorViewPrefabControllers.Add(validatorViewPrefabController);
-            
+
             validatorViewPrefabController.transform.SetParent(validatorViewsTransform, false);
         }
     }
@@ -72,6 +72,12 @@ public class VisualizerSceneController : MonoBehaviour
         {
             validatorViewPrefabController.UpdateBySlot((int)slotSlider.value);
         }
-        
+    }
+
+    private static IEnumerator FetchDataViaHTTP()
+    {
+        Debug.Log("-----xxx");
+        yield return HttpDataLoader.LoadSimulationViaHTTP();
+        Debug.Log("-----xxytx");
     }
 }
