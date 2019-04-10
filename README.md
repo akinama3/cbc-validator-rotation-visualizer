@@ -4,6 +4,10 @@
 
 Unity 2018.3.11
 
+### Dependency
+
+https://github.com/nrryuya/cbc-validator-rotation
+
 
 ## How to use this Visualizer
 
